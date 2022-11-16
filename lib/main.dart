@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:selfconsumption2/common/widgets/bottom_bar.dart';
 import 'package:selfconsumption2/features/auth/screens/auth_screen.dart';
 import 'package:selfconsumption2/constants/global_variables.dart';
+import 'package:selfconsumption2/features/auth/services/auth_service.dart';
 import 'package:selfconsumption2/providers/user_provider.dart';
 import 'package:selfconsumption2/router.dart';
 
@@ -13,10 +15,22 @@ void main() {
   ], child: const MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthService authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    authService.getUserData(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,6 +43,8 @@ class MyApp extends StatelessWidget {
             appBarTheme: const AppBarTheme(
                 elevation: 0, iconTheme: IconThemeData(color: Colors.black))),
         onGenerateRoute: ((settings) => generateRoute(settings)),
-        home: const AuthScreen());
+        home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+            ? const BottomBar()
+            : const AuthScreen());
   }
 }

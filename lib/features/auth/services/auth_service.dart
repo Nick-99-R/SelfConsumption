@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
-import 'package:selfconsumption2/features/home/screens/home_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../common/widgets/bottom_bar.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/global_variables.dart';
 import '../../../constants/utils.dart';
@@ -23,7 +23,7 @@ class AuthService {
       User user = User(id: '', password: password, email: email, token: '');
 
       http.Response res = await http.post(
-        Uri.parse('$uri/api/v1/users/register'),
+        Uri.parse('$uri/api/signup'),
         body: user.toJson(),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -36,7 +36,7 @@ class AuthService {
         onSuccess: () {
           showSnackBar(
             context,
-            'Account created! Login with the same credentials!',
+            'Account Erfolgreich erstellt',
           );
         },
       );
@@ -53,7 +53,7 @@ class AuthService {
   }) async {
     try {
       http.Response res = await http.post(
-        Uri.parse('$uri/api/v1/users/login'),
+        Uri.parse('$uri/api/signin'),
         body: jsonEncode({
           'password': password,
           'email': email,
@@ -63,8 +63,6 @@ class AuthService {
         },
       );
 
-      print(res.body);
-
       httpErrorHandle(
         response: res,
         context: context,
@@ -73,13 +71,11 @@ class AuthService {
 
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          // Navigator.pushNamedAndRemoveUntil(
-          //   context,
-          //   BottomBar.routeName,
-          //   (route) => false,
-          // );
           Navigator.pushNamedAndRemoveUntil(
-              context, HomeScreen.routeName, (route) => false);
+            context,
+            BottomBar.routeName,
+            (route) => false,
+          );
         },
       );
     } catch (e) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../constants/global_variables.dart';
+import '../../features/account/screens/account_screen.dart';
+import '../../features/home/screens/home_screens.dart';
 import '../../providers/user_provider.dart';
 
 class BottomBar extends StatefulWidget {
@@ -18,8 +20,8 @@ class _BottomBarState extends State<BottomBar> {
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    // const HomeScreen(),
-    // const AccountScreen(),
+    const HomeScreen(),
+    const AccountScreen(),
     // const CartScreen(),
   ];
 
