@@ -56,6 +56,8 @@ authRouter.get("/:id", async (req, res) => {
 //     });
 // }
 
+
+
 authRouter.post("/api/signup", async (req, res) => {
     try {
         const {password, email} = req.body;
@@ -79,6 +81,26 @@ authRouter.post("/api/signup", async (req, res) => {
         res.status(500).json({ error: e.message });
     }
 })
+
+// authRouter.post("/api/update", async (req, res) => {
+//     try {
+//         const id = parseInt(req.params.id);
+//             const {password} = req.body;
+        
+//             pool.query(queries.getUsersByID, [id], (error, results) => {
+//                 const noUserFound = !results.rows.length;
+//                 if(noUserFound){
+//                     res.send("User does not exist in the database");
+//                 }
+//                 pool.query(queries.updateUser, [password, id], (error, results) => {
+//                     if (error) throw error;
+//                     res.status(200).send("Password updated successfully");
+//                 });
+//             });
+//     } catch{
+//         res.status(500).json({ error: e.message });
+//     }
+// })
 
 authRouter.post("/api/signin", async (req, res) => {
     try{

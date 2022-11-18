@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfconsumption2/features/account/screens/update_password.dart';
 import 'package:selfconsumption2/features/account/widgets/accoun_button.dart';
 
 import '../services/account_services.dart';
@@ -30,9 +31,12 @@ class TopButtons extends StatelessWidget {
               onTap: () => AccountServices().logOut(context),
             ),
             AccountButton(
-              text: 'Your Wish List',
-              onTap: () {},
-            ),
+                text: 'Update Password',
+                onTap: () => Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      UpdatePasswordScreen.routeName,
+                      (route) => false,
+                    )),
           ],
         ),
       ],
