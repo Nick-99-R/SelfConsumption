@@ -8,8 +8,8 @@ import '../self_consumption/date_picker/date_start_picker.dart';
 bool showInitialChart = true;
 bool tapState = false;
 
-class ForeCastPage extends StatelessWidget {
-  const ForeCastPage({Key? key}) : super(key: key);
+class ForeCastScreen extends StatelessWidget {
+  const ForeCastScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selfconsumption2/constants/strings.dart';
+import 'package:selfconsumption2/features/forecast/forecast_screen.dart';
 import 'package:selfconsumption2/features/savings/savings_screen.dart';
 import 'package:selfconsumption2/features/self_consumption/screens/self_consumption_screen.dart';
 
@@ -22,6 +23,7 @@ class _BottomBarState extends State<BottomBar> {
   List<Widget> pages = [
     const SelfConsumptionScreen(),
     const SavingsScreen(),
+    const ForeCastScreen(),
     const AccountScreen(),
     // const CartScreen(),
   ];
@@ -66,8 +68,7 @@ class _BottomBarState extends State<BottomBar> {
             ),
             label: selfConsumptionString,
           ),
-          //CART
-          // ACCOUNT
+          // Ersparnisse
           BottomNavigationBarItem(
             icon: Container(
               width: bottomBarWidth,
@@ -87,6 +88,26 @@ class _BottomBarState extends State<BottomBar> {
             ),
             label: 'Ersparnisse',
           ),
+          // Forecast
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: _page == 2
+                        ? GlobalVariables.selectedNavBarColor
+                        : GlobalVariables.backgroundColor,
+                    width: bottomBarBorderWidth,
+                  ),
+                ),
+              ),
+              child: const Icon(
+                Icons.search,
+              ),
+            ),
+            label: 'Prognose',
+          ),
           // ACCOUNT
           BottomNavigationBarItem(
             icon: Container(
@@ -94,7 +115,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: _page == 1
+                    color: _page == 3
                         ? GlobalVariables.selectedNavBarColor
                         : GlobalVariables.backgroundColor,
                     width: bottomBarBorderWidth,
