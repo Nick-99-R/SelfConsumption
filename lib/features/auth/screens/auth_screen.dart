@@ -51,6 +51,8 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: GlobalVariables.greyBackgroundCOlor,
       body: SafeArea(
@@ -99,12 +101,12 @@ class _AuthScreenState extends State<AuthScreen> {
                           controller: _emailController,
                           hintText: 'Email',
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: size.height * 0.01),
                         CustomTextFieldPassword(
                           controller: _passwordController,
                           hintText: 'Password',
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: size.height * 0.01),
                         CustomButton(
                           text: 'Sign Up',
                           onTap: () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:selfconsumption2/common/widgets/bottom_bar.dart';
-import 'package:selfconsumption2/features/account/screens/update_password.dart';
+import 'package:selfconsumption2/features/account/screens/update_password_screen.dart';
 import 'package:selfconsumption2/features/auth/screens/auth_screen.dart';
 import 'package:selfconsumption2/features/self_consumption/screens/self_consumption_screen.dart';
 

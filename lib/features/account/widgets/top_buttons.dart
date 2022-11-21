@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:selfconsumption2/features/account/screens/update_password.dart';
+import 'package:selfconsumption2/features/account/screens/update_password_screen.dart';
 import 'package:selfconsumption2/features/account/widgets/accoun_button.dart';
 
 import '../services/account_services.dart';
@@ -35,7 +35,7 @@ class TopButtons extends StatelessWidget {
                 onTap: () => Navigator.pushNamedAndRemoveUntil(
                       context,
                       UpdatePasswordScreen.routeName,
-                      (route) => false,
+                      (route) => true,
                     )),
           ],
         ),

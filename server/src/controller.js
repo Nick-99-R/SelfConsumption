@@ -7,7 +7,7 @@ const express = require("express");
 const authRouter = express.Router();
 const e = require('express');
 
-
+var id;
 // authRouter.get("/", async (req, res) => {
 //     pool.query(queries.getUsers, (error, results) => {
 //         if (error) throw error;
@@ -82,25 +82,38 @@ authRouter.post("/api/signup", async (req, res) => {
     }
 })
 
-// authRouter.post("/api/update", async (req, res) => {
-//     try {
-//         const id = parseInt(req.params.id);
-//             const {password} = req.body;
-        
-//             pool.query(queries.getUsersByID, [id], (error, results) => {
-//                 const noUserFound = !results.rows.length;
-//                 if(noUserFound){
-//                     res.send("User does not exist in the database");
-//                 }
-//                 pool.query(queries.updateUser, [password, id], (error, results) => {
-//                     if (error) throw error;
-//                     res.status(200).send("Password updated successfully");
-//                 });
-//             });
-//     } catch{
-//         res.status(500).json({ error: e.message });
-//     }
-// })
+authRouter.post("/api/update", async (req, res) => {
+    try {
+        //const id = parseInt(req.params.id);
+        console.log(id);
+        const {password, oldPassword} = req.body;
+        pool.query(queries.getUsersByID, [id], async (error, results) => {
+                const noUserFound = !results.rows.length;
+                var databasePw = results.rows[0].password;
+                
+                const isMatch = await bcryptjs.compare(oldPassword, databasePw);
+                //const isMatch = databasePw === oldPassword
+
+                if(noUserFound){
+                    res.send("User does not exist in the database");
+                }
+                if(!isMatch){
+                   return res
+                .status(400)
+                .json({ msg: "Die Passwörter stimmen nicht überein" });
+               }
+
+               const hashedPassword = await bcryptjs.hash(password, 8);
+
+                pool.query(queries.updateUser, [hashedPassword, id], (error, results) => {
+                    if (error) throw error;
+                    res.status(200).json({msg: "Password updated successfully"});
+                });
+            });
+    } catch{
+        res.status(500).json({ error: e.message });
+    }
+})
 
 authRouter.post("/api/signin", async (req, res) => {
     try{
@@ -117,14 +130,16 @@ authRouter.post("/api/signin", async (req, res) => {
                 var string = results.rows[0].s;
                 var splitedString = string.split(","); 
                 var hashedPassword = splitedString[1];
+                
                 const isMatch = await bcryptjs.compare(password, hashedPassword);
                 if(!isMatch){
                     return res.status(400).json({msg:"Falsche E-mail - Passwort Kombination"});
                 } 
-                var id = splitedString[0];
+                id = splitedString[0];
                 while(id.charAt(0) ==='('){
                     id = id.substring(1);
                 }
+
                 const token = jwt.sign({id: id}, "passwordKey");
                 res.json({token, ...results.rows._doc});
                 }
