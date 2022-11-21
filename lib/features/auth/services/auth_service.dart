@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:selfconsumption2/features/auth/screens/auth_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../common/widgets/bottom_bar.dart';
@@ -74,6 +75,43 @@ class AuthService {
           Navigator.pushNamedAndRemoveUntil(
             context,
             BottomBar.routeName,
+            (route) => false,
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  // sign in user
+  void updatePassword({
+    required BuildContext context,
+    required String oldPassword,
+    required String password,
+  }) async {
+    try {
+      http.Response res = await http.post(
+        Uri.parse('$uri/api/update'),
+        body: jsonEncode({
+          'oldPassword': oldPassword,
+          'password': password,
+        }),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () async {
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
+          await sharedPreferences.setString('x-auth-token', '');
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AuthScreen.routeName,
             (route) => false,
           );
         },
