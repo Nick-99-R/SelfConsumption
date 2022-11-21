@@ -51,14 +51,20 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   height: size.height * 0.02,
                 ),
                 CustomTextFieldPassword(
-                    controller: _oldPasswordController,
-                    hintText: 'Altes Passwort'),
+                  controller: _oldPasswordController,
+                  hintText: 'Altes Passwort',
+                  icon: Icons.security,
+                  onPressed: () {},
+                ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
                 CustomTextFieldPassword(
-                    controller: _passwordController,
-                    hintText: 'Neues Passwort'),
+                  controller: _passwordController,
+                  hintText: 'Neues Passwort',
+                  icon: Icons.security,
+                  onPressed: () {},
+                ),
                 SizedBox(
                   height: size.height * 0.02,
                 ),
