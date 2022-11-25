@@ -24,7 +24,9 @@ class _BottomBarState extends State<BottomBar> {
     const SelfConsumptionScreen(),
     const SavingsScreen(),
     const ForeCastScreen(),
-    const AccountScreen(),
+    const AccountScreen(
+      title: 'Einstellungen',
+    ),
     // const CartScreen(),
   ];
 

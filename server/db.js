@@ -1,10 +1,10 @@
 const Pool = require('pg').Pool;
 
 const pool = new Pool({
-    user: "postgres",
+    user: "flutterdb_admin",
     host: "178.254.20.45",
     database: "postgres",
-    password: "asasBT31LKOD.",
+    password: "Acr6HHjx!85$",
     port: 5432
 });
 

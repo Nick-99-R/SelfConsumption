@@ -1,5 +1,6 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:selfconsumption2/features/self_consumption/services/self_consumption_service.dart';
 
 import '../../../constants/strings.dart';
 import '../../../features/self_consumption/date_picker/date_end_picker.dart';
@@ -8,9 +9,14 @@ import '../../../features/self_consumption/date_picker/date_start_picker.dart';
 class ChartInitialSelfConsumption extends StatelessWidget {
   final List<charts.Series<dynamic, DateTime>> seriesList;
   final bool? animate;
-  //final SelfConsumption selfConsumption;
+  final SelfConsumptionService selfConsumptionService =
+      SelfConsumptionService();
 
-  const ChartInitialSelfConsumption(this.seriesList, {this.animate});
+  void getPlantOutput() {
+    selfConsumptionService.getPlantOutput();
+  }
+
+  ChartInitialSelfConsumption(this.seriesList, {this.animate});
 
   //Creates a [TimeSeriesChart] with sample data and no transition.
   // factory SimpleTimeSeriesChart.withSampleData() {

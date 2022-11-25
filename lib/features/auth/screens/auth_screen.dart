@@ -54,6 +54,10 @@ class _AuthScreenState extends State<AuthScreen> {
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('MincentApp'),
+        backgroundColor: GlobalVariables.secondaryColor,
+      ),
       backgroundColor: GlobalVariables.greyBackgroundCOlor,
       body: SafeArea(
         child: Padding(
@@ -61,19 +65,12 @@ class _AuthScreenState extends State<AuthScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Welcome',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
               ListTile(
                 tileColor: _auth == Auth.signup
                     ? GlobalVariables.backgroundColor
                     : GlobalVariables.greyBackgroundCOlor,
                 title: const Text(
-                  'Create Account',
+                  'Account erstellen',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -105,18 +102,23 @@ class _AuthScreenState extends State<AuthScreen> {
                         SizedBox(height: size.height * 0.01),
                         CustomTextFieldPassword(
                           controller: _passwordController,
-                          hintText: 'Password',
+                          hintText: 'Passwort',
                           icon: Icons.security,
                           onPressed: () {},
                         ),
                         SizedBox(height: size.height * 0.01),
-                        CustomButton(
-                          text: 'Sign Up',
-                          onTap: () {
-                            if (_signUpFormKey.currentState!.validate()) {
-                              signUpUser();
-                            }
-                          },
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: size.height * 0.1,
+                              right: size.height * 0.1),
+                          child: CustomButton(
+                              buttonText: 'Registrieren',
+                              callback: () {
+                                if (_signUpFormKey.currentState!.validate()) {
+                                  signUpUser();
+                                }
+                              },
+                              color: GlobalVariables.secondaryColor),
                         )
                       ],
                     ),
@@ -127,7 +129,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ? GlobalVariables.backgroundColor
                     : GlobalVariables.greyBackgroundCOlor,
                 title: const Text(
-                  'Sign-In.',
+                  'Einloggen',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
@@ -159,17 +161,23 @@ class _AuthScreenState extends State<AuthScreen> {
                         const SizedBox(height: 10),
                         CustomTextFieldPassword(
                           controller: _passwordController,
-                          hintText: 'Password',
+                          hintText: 'Passwort',
+                          icon: Icons.security,
                           onPressed: () {},
                         ),
                         const SizedBox(height: 10),
-                        CustomButton(
-                          text: 'Sign In',
-                          onTap: () {
-                            if (_signInFormKey.currentState!.validate()) {
-                              signInUser();
-                            }
-                          },
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: size.height * 0.1,
+                              right: size.height * 0.1),
+                          child: CustomButton(
+                              buttonText: 'Einloggen',
+                              callback: () {
+                                if (_signInFormKey.currentState!.validate()) {
+                                  signInUser();
+                                }
+                              },
+                              color: GlobalVariables.secondaryColor),
                         )
                       ],
                     ),

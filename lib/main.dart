@@ -6,6 +6,7 @@ import 'package:selfconsumption2/constants/global_variables.dart';
 import 'package:selfconsumption2/features/auth/services/auth_service.dart';
 import 'package:selfconsumption2/providers/user_provider.dart';
 import 'package:selfconsumption2/router.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -35,6 +36,24 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Flutter Demo',
+        supportedLocales: const [
+          Locale('in', 'IN'),
+          Locale('en', 'US'),
+          Locale('de', 'DE'),
+        ],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        localeResolutionCallback: (locale, supportedLocales) {
+          for (var supportedLocaleLanguage in supportedLocales) {
+            if (supportedLocaleLanguage.languageCode == locale!.languageCode &&
+                supportedLocaleLanguage.countryCode == locale.countryCode) {
+              return supportedLocaleLanguage;
+            }
+          }
+          return supportedLocales.first;
+        },
         theme: ThemeData(
             scaffoldBackgroundColor: GlobalVariables.backgroundColor,
             colorScheme: const ColorScheme.light(

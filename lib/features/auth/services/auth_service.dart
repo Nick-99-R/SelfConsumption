@@ -84,7 +84,6 @@ class AuthService {
     }
   }
 
-  // sign in user
   void updatePassword({
     required BuildContext context,
     required String oldPassword,

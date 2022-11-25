@@ -18,36 +18,4 @@ class AccountServices {
       showSnackBar(context, e.toString());
     }
   }
-
-  // void updatePassword({
-  //   required BuildContext context,
-  //   required String password,
-  // }) async {
-  //   try {
-  //     User user = User(id: '', password: password, token: '', email: '');
-
-  //     http.Response res = await http.post(
-  //       Uri.parse('$uri/api/signup'),
-  //       body: user.toJson(),
-  //       headers: <String, String>{
-  //         'Content-Type': 'application/json; charset=UTF-8',
-  //       },
-  //     );
-
-  //     httpErrorHandle(
-  //       response: res,
-  //       context: context,
-  //       onSuccess: () {
-  //         showSnackBar(
-  //           context,
-  //           'Account Erfolgreich erstellt',
-  //         );
-  //       },
-  //     );
-  //     logOut(context);
-  //   }
-  //   catch (e) {
-  //     showSnackBar(context, e.toString());
-  //   }
-  //}
 }

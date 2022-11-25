@@ -1,8 +1,8 @@
-const pool = require('../db');
-const queries = require('./queries');
+const pool = require('../../db');
+const queries = require('../queries');
 const bcryptjs = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const auth = require("./middlewares/auth");
+const auth = require("../middlewares/auth");
 const express = require("express");
 const authRouter = express.Router();
 const e = require('express');
@@ -40,24 +40,6 @@ authRouter.get("/:id", async (req, res) => {
 //     })
 // }
 
-// const updateUser = (req, res) => {
-//     const id = parseInt(req.params.id);
-//     const {password} = req.body;
-
-//     pool.query(queries.getUsersByID, [id], (error, results) => {
-//         const noUserFound = !results.rows.length;
-//         if(noUserFound){
-//             res.send("User does not exist in the database");
-//         }
-//         pool.query(queries.updateUser, [password, id], (error, results) => {
-//             if (error) throw error;
-//             res.status(200).send("Password updated successfully");
-//         });
-//     });
-// }
-
-
-
 authRouter.post("/api/signup", async (req, res) => {
     try {
         const {password, email} = req.body;
@@ -66,7 +48,7 @@ authRouter.post("/api/signup", async (req, res) => {
         if(results.rows.length){
             return res
             .status(400)
-            .json({ msg: "User with same email already exists!" });        }
+            .json({ msg: "Benutzer mit dieser E-Mail existiert bereits" });        }
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
@@ -84,18 +66,15 @@ authRouter.post("/api/signup", async (req, res) => {
 
 authRouter.post("/api/update", async (req, res) => {
     try {
-        //const id = parseInt(req.params.id);
-        console.log(id);
         const {password, oldPassword} = req.body;
         pool.query(queries.getUsersByID, [id], async (error, results) => {
                 const noUserFound = !results.rows.length;
                 var databasePw = results.rows[0].password;
                 
                 const isMatch = await bcryptjs.compare(oldPassword, databasePw);
-                //const isMatch = databasePw === oldPassword
 
                 if(noUserFound){
-                    res.send("User does not exist in the database");
+                    res.send("Benutzer existiert nicht");
                 }
                 if(!isMatch){
                    return res
@@ -107,7 +86,7 @@ authRouter.post("/api/update", async (req, res) => {
 
                 pool.query(queries.updateUser, [hashedPassword, id], (error, results) => {
                     if (error) throw error;
-                    res.status(200).json({msg: "Password updated successfully"});
+                    res.status(200).json({msg: "Passwort erfolgreich geändert"});
                 });
             });
     } catch{
@@ -153,13 +132,10 @@ authRouter.post("/api/signin", async (req, res) => {
     
 authRouter.post("/tokenIsValid", async(req, res) => {
     try {
-        const id = parseInt(req.params.id);
-
         const token = req.header("x-auth-token");
         if (!token) return res.json(false);
         const verified = jwt.verify(token, "passwordKey");
         if (!verified) return res.json(false);
-
 
         pool.query(queries.getUsersByID, [verified.id], async (error, results) => {
             console.log(results)
@@ -170,9 +146,7 @@ authRouter.post("/tokenIsValid", async(req, res) => {
          else {
                 res.json(true);
                 }
-
             })
-
       } catch (e) {
         res.status(500).json({ error: e.message });
       }

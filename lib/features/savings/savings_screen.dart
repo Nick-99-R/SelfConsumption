@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfconsumption2/constants/global_variables.dart';
 import 'package:selfconsumption2/constants/strings.dart';
 
 import '../../common/widgets/charts/chart_initial.dart';
@@ -25,7 +26,7 @@ class _SavingsScreenState extends State<SavingsScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.green[600],
+        backgroundColor: GlobalVariables.secondaryColor,
         title: Text(
           'Ersparnisse',
           style: themeData.textTheme.bodyText1!.copyWith(
@@ -74,7 +75,7 @@ class _SavingsScreenState extends State<SavingsScreen> {
                   height: size.height * 0.05,
                   width: size.width * 0.5,
                   decoration: BoxDecoration(
-                    color: Colors.green[600],
+                    color: GlobalVariables.secondaryColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
@@ -105,7 +106,8 @@ class _SavingsScreenState extends State<SavingsScreen> {
                     height: size.height * 0.035,
                     width: size.width * 0.035,
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.green),
+                        shape: BoxShape.circle,
+                        color: GlobalVariables.secondaryColor),
                   ),
                   SizedBox(
                     width: size.width * 0.02,

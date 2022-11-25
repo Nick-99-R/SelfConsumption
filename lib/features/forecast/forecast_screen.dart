@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:selfconsumption2/constants/global_variables.dart';
 
 import '../../common/widgets/charts/chart_initial.dart';
 import '../../constants/strings.dart';
@@ -19,9 +20,9 @@ class ForeCastScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.green[600],
+        backgroundColor: GlobalVariables.secondaryColor,
         title: Text(
-          'Vorhersage',
+          'Prognose',
           style: themeData.textTheme.bodyText1!.copyWith(
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -103,7 +104,7 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                   height: size.height * 0.05,
                   width: size.width * 0.5,
                   decoration: BoxDecoration(
-                    color: Colors.green[600],
+                    color: GlobalVariables.secondaryColor,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
@@ -132,7 +133,8 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                     height: size.height * 0.035,
                     width: size.width * 0.035,
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.green),
+                        shape: BoxShape.circle,
+                        color: GlobalVariables.secondaryColor),
                   ),
                   SizedBox(
                     width: size.width * 0.02,

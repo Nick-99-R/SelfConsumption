@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfield.dart';
+import '../../../constants/global_variables.dart';
 import '../../auth/services/auth_service.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {
@@ -39,7 +40,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     return Scaffold(
         appBar: AppBar(
           elevation: 1,
-          backgroundColor: Colors.green,
+          backgroundColor: GlobalVariables.secondaryColor,
           title: const Text('Passwort updaten'),
         ),
         body: Padding(
@@ -69,12 +70,13 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   height: size.height * 0.02,
                 ),
                 CustomButton(
-                    text: 'Passwort ändern',
-                    onTap: () {
+                    buttonText: 'Passwort ändern',
+                    callback: () {
                       if (_updateFormKey.currentState!.validate()) {
                         updatePassword();
                       }
-                    })
+                    },
+                    color: GlobalVariables.secondaryColor)
               ])),
         ));
   }
