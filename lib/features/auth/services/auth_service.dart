@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -68,10 +69,13 @@ class AuthService {
         response: res,
         context: context,
         onSuccess: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
+          final EncryptedSharedPreferences encryptedSharedPreferences =
+              EncryptedSharedPreferences();
+          //SharedPreferences prefs = await SharedPreferences.getInstance();
 
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
-          await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          await encryptedSharedPreferences.setString(
+              'x-auth-token', jsonDecode(res.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
             context,
             BottomBar.routeName,
@@ -105,9 +109,11 @@ class AuthService {
         response: res,
         context: context,
         onSuccess: () async {
-          SharedPreferences sharedPreferences =
-              await SharedPreferences.getInstance();
-          await sharedPreferences.setString('x-auth-token', '');
+          final EncryptedSharedPreferences encryptedSharedPreferences =
+              EncryptedSharedPreferences();
+          //SharedPreferences sharedPreferences =
+          //    await SharedPreferences.getInstance();
+          await encryptedSharedPreferences.setString('x-auth-token', '');
           Navigator.pushNamedAndRemoveUntil(
             context,
             AuthScreen.routeName,
@@ -125,11 +131,15 @@ class AuthService {
     BuildContext context,
   ) async {
     try {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('x-auth-token');
+      final EncryptedSharedPreferences encryptedSharedPreferences =
+          EncryptedSharedPreferences();
+      //SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      String? token =
+          encryptedSharedPreferences.getString('x-auth-token') as String?;
 
       if (token == null) {
-        prefs.setString('x-auth-token', '');
+        encryptedSharedPreferences.setString('x-auth-token', '');
       }
 
       var tokenRes = await http.post(
