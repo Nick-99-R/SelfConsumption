@@ -43,21 +43,16 @@ authRouter.get("/:id", async (req, res) => {
 authRouter.post("/api/signup", async (req, res) => {
     try {
         const {password, email} = req.body;
-
     pool.query(queries.checkEmailExists, [email], async (error, results) => {
         if(results.rows.length){
             return res
             .status(400)
             .json({ msg: "Benutzer mit dieser E-Mail existiert bereits" });        }
-
         const hashedPassword = await bcryptjs.hash(password, 8);
-
         pool.query(queries.addUser, [hashedPassword, email], async (error, results) => {
             if (error) throw error;
-            res.status(201).send("Account erfolgreich erstellt");
-            
+            res.status(201).send("Account erfolgreich erstellt");  
         })
-       
     })
     } catch (error) {
         res.status(500).json({ error: e.message });

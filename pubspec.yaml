@@ -45,6 +45,7 @@ dependencies:
   charts_flutter: ^0.12.0
   flutter_localizations:
     sdk: flutter
+  encrypted_shared_preferences: ^3.0.1
 
 dev_dependencies:
   flutter_test:
