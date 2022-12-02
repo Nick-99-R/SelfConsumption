@@ -17,6 +17,8 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   final _updateFormKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _newPasswordRepeadController =
+      TextEditingController();
   final TextEditingController _oldPasswordController = TextEditingController();
 
   @override
@@ -24,6 +26,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
     super.dispose();
     _passwordController.dispose();
     _oldPasswordController.dispose();
+    _newPasswordRepeadController.dispose();
   }
 
   void updatePassword() {
@@ -69,11 +72,29 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
+                CustomTextFieldPassword(
+                  controller: _newPasswordRepeadController,
+                  hintText: 'Neues Passwort wiederholen',
+                  icon: Icons.security,
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  height: size.height * 0.02,
+                ),
                 CustomButton(
                     buttonText: 'Passwort ändern',
                     callback: () {
-                      if (_updateFormKey.currentState!.validate()) {
+                      if (_updateFormKey.currentState!.validate() &&
+                          _newPasswordRepeadController.text ==
+                              _passwordController.text) {
                         updatePassword();
+                      } else if (_newPasswordRepeadController.text !=
+                          _passwordController.text) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          backgroundColor: Colors.black,
+                          content: Text('Überprüfen sie das neue Passwort'),
+                        ));
                       }
                     },
                     color: GlobalVariables.secondaryColor)

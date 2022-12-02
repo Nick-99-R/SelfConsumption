@@ -149,7 +149,7 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                     width: size.width * 0.02,
                   ),
                   Text(
-                    'Eigenverbrauch in KWH',
+                    selfConsumptioninKwh,
                     style: themeData.textTheme.bodyText1,
                   ),
                 ],
@@ -185,7 +185,7 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                     height: size.height * 0.035,
                     width: size.width * 0.035,
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blue),
+                        shape: BoxShape.circle, color: GlobalVariables.blue),
                   ),
                   SizedBox(
                     width: size.width * 0.015,

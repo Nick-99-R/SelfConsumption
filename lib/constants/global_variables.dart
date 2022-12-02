@@ -15,9 +15,13 @@ class GlobalVariables {
     stops: [0.5, 1.0],
   );
 
-  static const secondaryColor = Colors.green;
+  //static const secondaryColor = Colors.green;
+  static const secondaryColor = Color(0xff7AB41D);
+
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundCOlor = Color(0xffebecee);
-  static var selectedNavBarColor = Colors.cyan[800]!;
+  static const selectedNavBarColor = Color(0xff006331);
   static const unselectedNavBarColor = Colors.black87;
+  static const blue = Color(0xff0085CA);
+  static const buttonColor = Color(0xff006331);
 }

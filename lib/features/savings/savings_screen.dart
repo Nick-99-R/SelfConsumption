@@ -113,7 +113,7 @@ class _SavingsScreenState extends State<SavingsScreen> {
                     width: size.width * 0.02,
                   ),
                   Text(
-                    'Ersparnisse durch den Eigenverbrauch',
+                    'Ersparnisse durch den Eigenverbrauch [€]',
                     style: themeData.textTheme.bodyText1,
                   ),
                 ],
@@ -134,7 +134,7 @@ class _SavingsScreenState extends State<SavingsScreen> {
                     width: size.width * 0.02,
                   ),
                   Text(
-                    'Einnamhen durch die Direkt Vermarktung',
+                    'Einnamhen durch die Direkt Vermarktung [€]',
                     style: themeData.textTheme.bodyText1,
                   ),
                 ],
@@ -149,13 +149,13 @@ class _SavingsScreenState extends State<SavingsScreen> {
                     height: size.height * 0.035,
                     width: size.width * 0.035,
                     decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blue),
+                        shape: BoxShape.circle, color: GlobalVariables.blue),
                   ),
                   SizedBox(
                     width: size.width * 0.015,
                   ),
                   Text(
-                    'Gesamte Ersparnisse',
+                    'Gesamte Ersparnisse [€]',
                     style: themeData.textTheme.bodyText1,
                   ),
                 ],

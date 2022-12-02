@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../constants/global_variables.dart';
-import '../../../constants/utils.dart';
 
 class SelfConsumptionService {
   // get user data

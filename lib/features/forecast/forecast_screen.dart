@@ -126,25 +126,25 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                   //       : const ChartObserverSelfConsumption(),
                   ),
               SizedBox(height: size.height * 0.03),
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    height: size.height * 0.035,
-                    width: size.width * 0.035,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: GlobalVariables.secondaryColor),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.02,
-                  ),
-                  Text(
-                    'Erzeugung in KWH',
-                    style: themeData.textTheme.bodyText1,
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       alignment: Alignment.bottomRight,
+              //       height: size.height * 0.035,
+              //       width: size.width * 0.035,
+              //       decoration: const BoxDecoration(
+              //           shape: BoxShape.circle,
+              //           color: GlobalVariables.secondaryColor),
+              //     ),
+              //     SizedBox(
+              //       width: size.width * 0.02,
+              //     ),
+              //     Text(
+              //       'Erzeugung in KWH',
+              //       style: themeData.textTheme.bodyText1,
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: size.height * 0.01,
               ),
@@ -169,24 +169,24 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    height: size.height * 0.035,
-                    width: size.width * 0.035,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.blue),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.015,
-                  ),
-                  Text(
-                    shareInDirectMarcetingString,
-                    style: themeData.textTheme.bodyText1,
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       alignment: Alignment.bottomRight,
+              //       height: size.height * 0.035,
+              //       width: size.width * 0.035,
+              //       decoration: const BoxDecoration(
+              //           shape: BoxShape.circle, color: Colors.blue),
+              //     ),
+              //     SizedBox(
+              //       width: size.width * 0.015,
+              //     ),
+              //     Text(
+              //       shareInDirectMarcetingString,
+              //       style: themeData.textTheme.bodyText1,
+              //     ),
+              //   ],
+              // ),
               SizedBox(
                 height: size.height * 0.01,
               ),
