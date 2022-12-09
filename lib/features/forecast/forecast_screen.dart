@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:selfconsumption2/constants/global_variables.dart';
+import 'package:selfconsumption2/features/forecast/chart/forecast_chart.dart';
 
-import '../../common/widgets/charts/chart_initial.dart';
 import '../../constants/strings.dart';
 import '../self_consumption/date_picker/date_end_picker.dart';
 import '../self_consumption/date_picker/date_start_picker.dart';
@@ -59,142 +59,91 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    late DateTime? confirmedStartDate =
-        DateTime.parse(confirmedStartDateString);
-    late DateTime? confirmedEndDate = DateTime.parse(confirmedEndDateString);
     final size = MediaQuery.of(context).size;
     final themeData = Theme.of(context);
+    late DateTime? confirmedEndDate = DateTime.parse(confirmedEndDateString);
+
     return Scaffold(
         body: Padding(
-            padding: EdgeInsets.only(
-                left: size.width * 0.02, right: size.width * 0.02),
-            child: SizedBox(
-                child: Column(children: [
-              SizedBox(
-                width: double.infinity,
-                height: size.height * 0.08,
-                child: const DateStartPicker(),
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: size.height * 0.1,
-                child: const DateEndPicker(),
-              ),
-              InkResponse(
-                onTap: () {
-                  // error messages if no date was entered or invalid date
-                  // was entered
-                  if (confirmedEndDate.isBefore(confirmedStartDate)) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.redAccent,
-                      content: Text(invalidDateInput,
-                          style: themeData.textTheme.bodyText1),
-                    ));
-                    // display default chart if the user enters a
-                    // invalid date
-                    showInitialChart = true;
-                    setState(() {});
-                  } else {
-                    _toggleState();
-                    _toggleTapState();
-                    setState(() {});
-                  }
-                },
-                child: Container(
-                  height: size.height * 0.05,
-                  width: size.width * 0.5,
-                  decoration: BoxDecoration(
-                    color: GlobalVariables.secondaryColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(loadDiagramm,
-                        style: themeData.textTheme.headline1!.copyWith(
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 4)),
-                  ),
-                ),
-              ),
-              Expanded(
-                  child: //showInitialChart || tapState && !tapState
-                      ChartInitialSelfConsumption(
-                          ChartInitialSelfConsumption.createChartInitial())
-                  //   : tapState
-                  //       ? const ChartObserverSelfConsumption()
-                  //       : const ChartObserverSelfConsumption(),
-                  ),
-              SizedBox(height: size.height * 0.03),
-              // Row(
-              //   children: [
-              //     Container(
-              //       alignment: Alignment.bottomRight,
-              //       height: size.height * 0.035,
-              //       width: size.width * 0.035,
-              //       decoration: const BoxDecoration(
-              //           shape: BoxShape.circle,
-              //           color: GlobalVariables.secondaryColor),
-              //     ),
-              //     SizedBox(
-              //       width: size.width * 0.02,
-              //     ),
-              //     Text(
-              //       'Erzeugung in KWH',
-              //       style: themeData.textTheme.bodyText1,
-              //     ),
-              //   ],
-              // ),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    height: size.height * 0.035,
-                    width: size.width * 0.035,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Colors.red),
-                  ),
-                  SizedBox(
-                    width: size.width * 0.02,
-                  ),
-                  Text(
-                    shareOfTotalProduction,
-                    style: themeData.textTheme.bodyText1,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-              // Row(
-              //   children: [
-              //     Container(
-              //       alignment: Alignment.bottomRight,
-              //       height: size.height * 0.035,
-              //       width: size.width * 0.035,
-              //       decoration: const BoxDecoration(
-              //           shape: BoxShape.circle, color: Colors.blue),
-              //     ),
-              //     SizedBox(
-              //       width: size.width * 0.015,
-              //     ),
-              //     Text(
-              //       shareInDirectMarcetingString,
-              //       style: themeData.textTheme.bodyText1,
-              //     ),
-              //   ],
-              // ),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
-            ]))));
+      padding:
+          EdgeInsets.only(left: size.width * 0.02, right: size.width * 0.02),
+      // child: SizedBox(
+      child: Column(children: [
+        SizedBox(
+          width: double.infinity,
+          height: size.height * 0.08,
+          child: const DateEndPicker(),
+        ),
+        InkResponse(
+          onTap: () {
+            // error messages if no date was entered or invalid date
+            // was entered
+            if (!confirmedEndDate.isAfter(DateTime.now())) {
+              // display default chart if the user enters a
+              // invalid date
+              showInitialChart = true;
+              setState(() {});
+            } else {
+              _toggleState();
+              _toggleTapState();
+              setState(() {});
+            }
+          },
+          child: Container(
+            height: size.height * 0.05,
+            width: size.width * 0.5,
+            decoration: BoxDecoration(
+              color: GlobalVariables.secondaryColor,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Center(
+              child: Text(loadDiagramm,
+                  style: themeData.textTheme.headline1!.copyWith(
+                      fontSize: 14,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 4)),
+            ),
+          ),
+        ),
+        Expanded(
+            child: showInitialChart || tapState && !tapState
+                ? ForeCastChart(ForeCastChart.createChartInitial())
+                : ForeCastChart(ForeCastChart.createNewChart())
+            // ChartInitialSelfConsumption(
+            //     ChartInitialSelfConsumption.createChartInitial())
+            //   : tapState
+            //       ? const ChartObserverSelfConsumption()
+            //       : const ChartObserverSelfConsumption(),
+            ),
+        SizedBox(height: size.height * 0.03),
+        Row(
+          children: [
+            Container(
+              alignment: Alignment.bottomRight,
+              height: size.height * 0.035,
+              width: size.width * 0.035,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.red),
+            ),
+            SizedBox(
+              width: size.width * 0.02,
+            ),
+            Text(
+              shareOfTotalProduction,
+              style: themeData.textTheme.bodyText1,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: size.height * 0.01,
+        ),
+      ]),
+    ));
   }
 
-  // Initial State == Defaul Chart (One Month into past)
-// If data is entered, state changes to false
+  // Initial State == Defaul Chart (Until tomorrow)
+  // If data is entered, state changes to false
   void _toggleState() {
     setState(() {
       (confirmedStartDateString == formatDateUSA(prevMonthFromNow) &&
@@ -204,7 +153,7 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
     });
   }
 
-// Everytime the button is clicked, ChartObserver() should be
+// Everytime the button is clicked, CreateNewChart() should be
 // fired again
   void _toggleTapState() {
     setState(() {
