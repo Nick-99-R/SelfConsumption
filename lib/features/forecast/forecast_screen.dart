@@ -1,3 +1,4 @@
+import 'package:f_datetimerangepicker/f_datetimerangepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:selfconsumption2/constants/global_variables.dart';
 
@@ -64,6 +65,8 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
     late DateTime? confirmedEndDate = DateTime.parse(confirmedEndDateString);
     final size = MediaQuery.of(context).size;
     final themeData = Theme.of(context);
+    String? resultString;
+
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.only(
@@ -71,15 +74,31 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
             child: SizedBox(
                 child: Column(children: [
               SizedBox(
-                width: double.infinity,
-                height: size.height * 0.08,
-                child: const DateStartPicker(),
-              ),
-              SizedBox(
-                width: double.infinity,
-                height: size.height * 0.1,
-                child: const DateEndPicker(),
-              ),
+                  width: double.infinity,
+                  height: size.height * 0.08,
+                  child: TextButton(
+                    child: const Text("Open"),
+                    onPressed: () {
+                      DateTimeRangePicker(
+                              startText: "Von",
+                              endText: "Bis",
+                              doneText: "Bestätigen",
+                              cancelText: "Abbrechen",
+                              interval: 15,
+                              initialStartTime:
+                                  DateTime.now().add(const Duration(hours: 1)),
+                              initialEndTime:
+                                  DateTime.now().add(const Duration(days: 1)),
+                              mode: DateTimeRangePickerMode.dateAndTime,
+                              minimumTime: DateTime.now(),
+                              maximumTime:
+                                  DateTime.now().add(const Duration(days: 3)),
+                              use24hFormat: true,
+                              onConfirm: (start, end) {})
+                          .showPicker(context);
+                    },
+                  )),
+              Text(resultString ?? ""),
               InkResponse(
                 onTap: () {
                   // error messages if no date was entered or invalid date
@@ -126,25 +145,6 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                   //       : const ChartObserverSelfConsumption(),
                   ),
               SizedBox(height: size.height * 0.03),
-              // Row(
-              //   children: [
-              //     Container(
-              //       alignment: Alignment.bottomRight,
-              //       height: size.height * 0.035,
-              //       width: size.width * 0.035,
-              //       decoration: const BoxDecoration(
-              //           shape: BoxShape.circle,
-              //           color: GlobalVariables.secondaryColor),
-              //     ),
-              //     SizedBox(
-              //       width: size.width * 0.02,
-              //     ),
-              //     Text(
-              //       'Erzeugung in KWH',
-              //       style: themeData.textTheme.bodyText1,
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: size.height * 0.01,
               ),
@@ -169,31 +169,13 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              // Row(
-              //   children: [
-              //     Container(
-              //       alignment: Alignment.bottomRight,
-              //       height: size.height * 0.035,
-              //       width: size.width * 0.035,
-              //       decoration: const BoxDecoration(
-              //           shape: BoxShape.circle, color: Colors.blue),
-              //     ),
-              //     SizedBox(
-              //       width: size.width * 0.015,
-              //     ),
-              //     Text(
-              //       shareInDirectMarcetingString,
-              //       style: themeData.textTheme.bodyText1,
-              //     ),
-              //   ],
-              // ),
               SizedBox(
                 height: size.height * 0.01,
               ),
             ]))));
   }
 
-  // Initial State == Defaul Chart (One Month into past)
+// Initial State == Defaul Chart (One Month into past)
 // If data is entered, state changes to false
   void _toggleState() {
     setState(() {
