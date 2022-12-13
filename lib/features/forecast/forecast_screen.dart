@@ -1,14 +1,15 @@
 import 'package:f_datetimerangepicker/f_datetimerangepicker.dart';
 import 'package:flutter/material.dart';
 import 'package:selfconsumption2/constants/global_variables.dart';
+import 'package:selfconsumption2/features/forecast/chart/forecast_chart.dart';
 
-import '../../common/widgets/charts/chart_initial.dart';
 import '../../constants/strings.dart';
-import '../self_consumption/date_picker/date_end_picker.dart';
-import '../self_consumption/date_picker/date_start_picker.dart';
 
 bool showInitialChart = true;
 bool tapState = false;
+DateTime endInput =
+    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1);
+DateTime now = DateTime.now();
 
 class ForeCastScreen extends StatelessWidget {
   const ForeCastScreen({Key? key}) : super(key: key);
@@ -60,50 +61,47 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
 
   @override
   Widget build(BuildContext context) {
-    late DateTime? confirmedStartDate =
-        DateTime.parse(confirmedStartDateString);
-    late DateTime? confirmedEndDate = DateTime.parse(confirmedEndDateString);
     final size = MediaQuery.of(context).size;
     final themeData = Theme.of(context);
-    String? resultString;
 
     return Scaffold(
         body: Padding(
             padding: EdgeInsets.only(
                 left: size.width * 0.02, right: size.width * 0.02),
-            child: SizedBox(
-                child: Column(children: [
-              SizedBox(
-                  width: double.infinity,
-                  height: size.height * 0.08,
-                  child: TextButton(
-                    child: const Text("Open"),
-                    onPressed: () {
-                      DateTimeRangePicker(
-                              startText: "Von",
-                              endText: "Bis",
-                              doneText: "Bestätigen",
-                              cancelText: "Abbrechen",
-                              interval: 15,
-                              initialStartTime:
-                                  DateTime.now().add(const Duration(hours: 1)),
-                              initialEndTime:
-                                  DateTime.now().add(const Duration(days: 1)),
-                              mode: DateTimeRangePickerMode.dateAndTime,
-                              minimumTime: DateTime.now(),
-                              maximumTime:
-                                  DateTime.now().add(const Duration(days: 3)),
-                              use24hFormat: true,
-                              onConfirm: (start, end) {})
-                          .showPicker(context);
-                    },
-                  )),
-              Text(resultString ?? ""),
+            child: Column(children: [
+              OutlinedButton.icon(
+                // <-- OutlinedButton
+                onPressed: () {
+                  DateTimeRangePicker(
+                      startText: "Von",
+                      endText: "Bis",
+                      doneText: "Bestätigen",
+                      cancelText: "Abbrechen",
+                      interval: 15,
+                      initialStartTime:
+                          DateTime.now().add(const Duration(hours: 1)),
+                      initialEndTime:
+                          DateTime.now().add(const Duration(days: 1)),
+                      mode: DateTimeRangePickerMode.dateAndTime,
+                      minimumTime: DateTime.now(),
+                      maximumTime: DateTime.now().add(const Duration(days: 3)),
+                      use24hFormat: true,
+                      onConfirm: (start, end) {
+                        setState(() {
+                          endInput = end;
+                          now = start;
+                        });
+                      }).showPicker(context);
+                },
+                icon: const Icon(
+                  Icons.calendar_today,
+                  size: 24.0,
+                ),
+                label: const Text('Zeitraum auswählen'),
+              ),
               InkResponse(
                 onTap: () {
-                  // error messages if no date was entered or invalid date
-                  // was entered
-                  if (confirmedEndDate.isBefore(confirmedStartDate)) {
+                  if (endInput.isBefore(DateTime.now())) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.redAccent,
                       content: Text(invalidDateInput,
@@ -137,13 +135,10 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                 ),
               ),
               Expanded(
-                  child: //showInitialChart || tapState && !tapState
-                      ChartInitialSelfConsumption(
-                          ChartInitialSelfConsumption.createChartInitial())
-                  //   : tapState
-                  //       ? const ChartObserverSelfConsumption()
-                  //       : const ChartObserverSelfConsumption(),
-                  ),
+                  // child: showInitialChart || tapState && !tapState
+                  //     ? ForeCastChart(ForeCastChart.createChartInitial())
+                  //     : ForeCastChart(ForeCastChart.createNewChart()
+                  child: ForeCastChart(ForeCastChart.createChartInitial())),
               SizedBox(height: size.height * 0.03),
               SizedBox(
                 height: size.height * 0.01,
@@ -172,21 +167,23 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-            ]))));
+            ])));
   }
 
-// Initial State == Defaul Chart (One Month into past)
-// If data is entered, state changes to false
+  // Initial State == Defaul Chart (Until tomorrow)
+  // If data is entered, state changes to false
   void _toggleState() {
     setState(() {
-      (confirmedStartDateString == formatDateUSA(prevMonthFromNow) &&
-              confirmedEndDateString == formatDateUSA(DateTime.now()))
+      (now == DateTime.now()) &&
+              endInput ==
+                  DateTime(DateTime.now().year, DateTime.now().month,
+                      DateTime.now().day + 1)
           ? showInitialChart = true
           : showInitialChart = false;
     });
   }
 
-// Everytime the button is clicked, ChartObserver() should be
+// Everytime the button is clicked, CreateNewChart() should be
 // fired again
   void _toggleTapState() {
     setState(() {
