@@ -39,11 +39,11 @@ class ForeCastChart extends StatelessWidget {
     DateTime tomorrow = DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day + 1);
     late DateTime? confirmedEndDate = endInput;
+    late DateTime? confirmedStartDate = now;
 
     final shareInOutputDateEntered = [
-      TimeSeriesSales(DateTime.now(), 40),
-      TimeSeriesSales(tomorrow, 50),
-      TimeSeriesSales(confirmedEndDate, 40),
+      TimeSeriesSales(confirmedStartDate, 40),
+      TimeSeriesSales(confirmedEndDate, 60),
     ];
     return [
       charts.Series<TimeSeriesSales, DateTime>(

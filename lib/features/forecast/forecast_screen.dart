@@ -92,8 +92,8 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                       onConfirm: (start, end) {
                         if (start.isBefore(end)) {
                           setState(() {
-                            endInput = end;
                             now = start;
+                            endInput = end;
                           });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
