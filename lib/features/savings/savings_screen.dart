@@ -62,8 +62,6 @@ class _SavingsScreenState extends State<SavingsScreen> {
                       content: Text(invalidDateInput,
                           style: themeData.textTheme.bodyText1),
                     ));
-                    showInitialChart = true;
-                    setState(() {});
                   } else {
                     _toggleStateSaving();
                     _toggleTapState();

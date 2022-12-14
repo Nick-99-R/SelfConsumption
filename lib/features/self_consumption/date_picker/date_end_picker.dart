@@ -47,8 +47,8 @@ class _DateEndPickerState extends State<DateEndPicker> {
             locale: const Locale('de'),
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime(1950),
-            lastDate: DateTime(2100),
+            firstDate: oneYearAgo,
+            lastDate: oneYearAfter,
           );
 
           if (pickedDate != null) {

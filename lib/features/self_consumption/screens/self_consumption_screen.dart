@@ -99,10 +99,6 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                       content: Text(invalidDateInput,
                           style: themeData.textTheme.bodyText1),
                     ));
-                    // display default chart if the user enters a
-                    // invalid date
-                    showInitialChart = true;
-                    setState(() {});
                   } else {
                     _toggleState();
                     _toggleTapState();
@@ -127,13 +123,8 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                 ),
               ),
               Expanded(
-                  child: //showInitialChart || tapState && !tapState
-                      ChartInitialSelfConsumption(
-                          ChartInitialSelfConsumption.createChartInitial())
-                  //   : tapState
-                  //       ? const ChartObserverSelfConsumption()
-                  //       : const ChartObserverSelfConsumption(),
-                  ),
+                  child: ChartInitialSelfConsumption(
+                      ChartInitialSelfConsumption.createChartInitial())),
               SizedBox(height: size.height * 0.03),
               Row(
                 children: [
@@ -203,7 +194,7 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
   }
 
   // Initial State == Defaul Chart (One Month into past)
-// If data is entered, state changes to false
+  // If data is entered, state changes to false
   void _toggleState() {
     setState(() {
       (confirmedStartDateString == formatDateUSA(prevMonthFromNow) &&

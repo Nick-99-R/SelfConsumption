@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
-
 DateTime prevMonthFromNow =
     DateTime(DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
 var confirmedStartDateString = formatDateUSA(prevMonthFromNow);
+
+DateTime oneYearAgo =
+    DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+DateTime oneYearAfter =
+    DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
 class DateStartPicker extends StatefulWidget {
   const DateStartPicker({Key? key}) : super(key: key);
@@ -50,8 +54,8 @@ class _DateStartPickerState extends State<DateStartPicker> {
             locale: const Locale('de'),
             context: context,
             initialDate: prevMonthFromNow,
-            firstDate: DateTime(1950),
-            lastDate: DateTime(2100),
+            firstDate: oneYearAgo,
+            lastDate: oneYearAfter,
           );
 
           if (pickedDate != null) {
@@ -59,8 +63,8 @@ class _DateStartPickerState extends State<DateStartPicker> {
 
             setState(() {
               dateInput.text = formattedDate;
+              confirmedStartDateString = formatDateUSA(pickedDate);
             });
-            confirmedStartDateString = formatDateUSA(pickedDate);
           } else {}
         },
       ),

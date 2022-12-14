@@ -69,6 +69,9 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
             padding: EdgeInsets.only(
                 left: size.width * 0.02, right: size.width * 0.02),
             child: Column(children: [
+              SizedBox(
+                height: size.height * 0.01,
+              ),
               OutlinedButton.icon(
                 // <-- OutlinedButton
                 onPressed: () {
@@ -87,10 +90,18 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                       maximumTime: DateTime.now().add(const Duration(days: 3)),
                       use24hFormat: true,
                       onConfirm: (start, end) {
-                        setState(() {
-                          endInput = end;
-                          now = start;
-                        });
+                        if (start.isBefore(end)) {
+                          setState(() {
+                            endInput = end;
+                            now = start;
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.redAccent,
+                            content: Text(invalidDateInput,
+                                style: themeData.textTheme.bodyText1),
+                          ));
+                        }
                       }).showPicker(context);
                 },
                 icon: const Icon(
@@ -99,50 +110,9 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
                 ),
                 label: const Text('Zeitraum auswählen'),
               ),
-              InkResponse(
-                onTap: () {
-                  if (endInput.isBefore(DateTime.now())) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.redAccent,
-                      content: Text(invalidDateInput,
-                          style: themeData.textTheme.bodyText1),
-                    ));
-                    // display default chart if the user enters a
-                    // invalid date
-                    showInitialChart = true;
-                    setState(() {});
-                  } else {
-                    _toggleState();
-                    _toggleTapState();
-                    setState(() {});
-                  }
-                },
-                child: Container(
-                  height: size.height * 0.05,
-                  width: size.width * 0.5,
-                  decoration: BoxDecoration(
-                    color: GlobalVariables.secondaryColor,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Center(
-                    child: Text(loadDiagramm,
-                        style: themeData.textTheme.headline1!.copyWith(
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 4)),
-                  ),
-                ),
-              ),
               Expanded(
-                  // child: showInitialChart || tapState && !tapState
-                  //     ? ForeCastChart(ForeCastChart.createChartInitial())
-                  //     : ForeCastChart(ForeCastChart.createNewChart()
                   child: ForeCastChart(ForeCastChart.createChartInitial())),
               SizedBox(height: size.height * 0.03),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
               Row(
                 children: [
                   Container(
@@ -164,30 +134,6 @@ class _SelfConsumptionPageState extends State<SelfConsumptionPage> {
               SizedBox(
                 height: size.height * 0.01,
               ),
-              SizedBox(
-                height: size.height * 0.01,
-              ),
             ])));
-  }
-
-  // Initial State == Defaul Chart (Until tomorrow)
-  // If data is entered, state changes to false
-  void _toggleState() {
-    setState(() {
-      (now == DateTime.now()) &&
-              endInput ==
-                  DateTime(DateTime.now().year, DateTime.now().month,
-                      DateTime.now().day + 1)
-          ? showInitialChart = true
-          : showInitialChart = false;
-    });
-  }
-
-// Everytime the button is clicked, CreateNewChart() should be
-// fired again
-  void _toggleTapState() {
-    setState(() {
-      !tapState ? tapState = true : tapState = false;
-    });
   }
 }

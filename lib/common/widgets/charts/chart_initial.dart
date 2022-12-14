@@ -38,104 +38,47 @@ class ChartInitialSelfConsumption extends StatelessWidget {
   }
 
   static List<charts.Series<TimeSeriesSales, DateTime>> createChartInitial() {
-    //dates
-
-    DateTime prevMonthFromNow = DateTime(
-        DateTime.now().year, DateTime.now().month - 1, DateTime.now().day);
-
     late DateTime? confirmedStartDate =
         DateTime.parse(confirmedStartDateString);
     late DateTime? confirmedEndDate = DateTime.parse(confirmedEndDateString);
 
-    // different cases: Wether InitialStartdate (One month before today),
-    // or InitialEndDate is changed (today)
-    if (confirmedStartDate.isBefore(confirmedEndDate) &&
-        confirmedStartDateString == formatDateUSA(prevMonthFromNow) &&
-        confirmedEndDateString == formatDateUSA(DateTime.now())) {
-      final selfconsumptionDateEntered = [
-        TimeSeriesSales(prevMonthFromNow, 100),
-        TimeSeriesSales(DateTime.now(), 60),
-      ];
-      final shareInOutputDateEntered = [
-        TimeSeriesSales(prevMonthFromNow, 40),
-        TimeSeriesSales(DateTime.now(), 30),
-      ];
-      final shareInMarcetingDateEntered = [
-        TimeSeriesSales(prevMonthFromNow, 20),
-        TimeSeriesSales(DateTime.now(), 10),
-      ];
+    final selfconsumptionDateEntered = [
+      TimeSeriesSales(confirmedStartDate, 100),
+      TimeSeriesSales(confirmedEndDate, 60),
+    ];
+    final shareInOutputDateEntered = [
+      TimeSeriesSales(confirmedStartDate, 40),
+      TimeSeriesSales(confirmedEndDate, 30),
+    ];
+    final shareInMarcetingDateEntered = [
+      TimeSeriesSales(confirmedStartDate, 20),
+      TimeSeriesSales(confirmedEndDate, 10),
+    ];
 
-      return [
-        charts.Series<TimeSeriesSales, DateTime>(
-          id: selfConsumptionString,
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (TimeSeriesSales sales, _) => sales.time,
-          measureFn: (TimeSeriesSales sales, _) => sales.sales,
-          data: selfconsumptionDateEntered,
-        ),
-        charts.Series<TimeSeriesSales, DateTime>(
-          id: shareOfTotalProduction,
-          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-          domainFn: (TimeSeriesSales sales, _) => sales.time,
-          measureFn: (TimeSeriesSales sales, _) => sales.sales,
-          data: shareInOutputDateEntered,
-        ),
-        charts.Series<TimeSeriesSales, DateTime>(
-          id: shareInDirectMarcetingString,
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-          domainFn: (TimeSeriesSales sales, _) => sales.time,
-          measureFn: (TimeSeriesSales sales, _) => sales.sales,
-          data: shareInMarcetingDateEntered,
-        ),
-      ];
-
-      // startdate is changed and enddate is not changed,
-    }
-
-    // curious else case
-    else {
-      final selfConsumptionDefault = [
-        TimeSeriesSales(DateTime.now(), 40),
-        TimeSeriesSales(prevMonthFromNow, 80),
-      ];
-
-      final shareInOutputDefault = [
-        TimeSeriesSales(DateTime.now(), 20),
-        TimeSeriesSales(prevMonthFromNow, 50),
-      ];
-
-      final shareInMarcetingDefault = [
-        TimeSeriesSales(DateTime.now(), 60),
-        TimeSeriesSales(prevMonthFromNow, 10),
-      ];
-
-      return [
-        charts.Series<TimeSeriesSales, DateTime>(
-          id: selfConsumptionString,
-          colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
-          domainFn: (TimeSeriesSales sales, _) => sales.time,
-          measureFn: (TimeSeriesSales sales, _) => sales.sales,
-          data: selfConsumptionDefault,
-        ),
-        charts.Series<TimeSeriesSales, DateTime>(
-          id: shareOfTotalProduction,
-          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-          domainFn: (TimeSeriesSales sales, _) => sales.time,
-          measureFn: (TimeSeriesSales sales, _) => sales.sales,
-          data: shareInOutputDefault,
-        ),
-        charts.Series<TimeSeriesSales, DateTime>(
-          id: shareInDirectMarcetingString,
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-          domainFn: (TimeSeriesSales sales, _) => sales.time,
-          measureFn: (TimeSeriesSales sales, _) => sales.sales,
-          data: shareInMarcetingDefault,
-        ),
-      ];
-    }
+    return [
+      charts.Series<TimeSeriesSales, DateTime>(
+        id: selfConsumptionString,
+        colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
+        domainFn: (TimeSeriesSales sales, _) => sales.time,
+        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        data: selfconsumptionDateEntered,
+      ),
+      charts.Series<TimeSeriesSales, DateTime>(
+        id: shareOfTotalProduction,
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (TimeSeriesSales sales, _) => sales.time,
+        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        data: shareInOutputDateEntered,
+      ),
+      charts.Series<TimeSeriesSales, DateTime>(
+        id: shareInDirectMarcetingString,
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (TimeSeriesSales sales, _) => sales.time,
+        measureFn: (TimeSeriesSales sales, _) => sales.sales,
+        data: shareInMarcetingDateEntered,
+      ),
+    ];
   }
-
-  /// Create one series with sample hard coded data.
 }
 
 // Sample time series data type.
