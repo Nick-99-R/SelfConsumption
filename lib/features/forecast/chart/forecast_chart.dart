@@ -16,16 +16,6 @@ class ForeCastChart extends StatelessWidget {
 
   ForeCastChart(this.seriesList, {super.key, this.animate});
 
-  //Creates a [TimeSeriesChart] with sample data and no transition.
-  // factory SimpleTimeSeriesChart.withSampleData() {
-  //   return SimpleTimeSeriesChart(
-  //     createChartSuccess(),
-  //     // selfConsumption: SelfConsumption.empty(),
-  //     // Disable animations for image tests.
-  //     animate: false,
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return charts.TimeSeriesChart(
@@ -36,8 +26,6 @@ class ForeCastChart extends StatelessWidget {
   }
 
   static List<charts.Series<TimeSeriesSales, DateTime>> createChartInitial() {
-    DateTime tomorrow = DateTime(
-        DateTime.now().year, DateTime.now().month, DateTime.now().day + 1);
     late DateTime? confirmedEndDate = endInput;
     late DateTime? confirmedStartDate = now;
 

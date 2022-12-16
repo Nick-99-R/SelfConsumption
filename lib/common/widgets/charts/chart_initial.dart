@@ -18,16 +18,6 @@ class ChartInitialSelfConsumption extends StatelessWidget {
 
   ChartInitialSelfConsumption(this.seriesList, {super.key, this.animate});
 
-  //Creates a [TimeSeriesChart] with sample data and no transition.
-  // factory SimpleTimeSeriesChart.withSampleData() {
-  //   return SimpleTimeSeriesChart(
-  //     createChartSuccess(),
-  //     // selfConsumption: SelfConsumption.empty(),
-  //     // Disable animations for image tests.
-  //     animate: false,
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return charts.TimeSeriesChart(

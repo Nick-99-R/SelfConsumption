@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 String uri =
-    Platform.isAndroid ? 'http://192.168.178.29:3000' : 'http://localhost:3000';
+    Platform.isAndroid ? 'http://192.168.2.178:3000' : 'http://localhost:3000';
 
 class GlobalVariables {
   // COLORS

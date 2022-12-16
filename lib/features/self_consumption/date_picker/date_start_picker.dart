@@ -8,8 +8,6 @@ var confirmedStartDateString = formatDateUSA(prevMonthFromNow);
 
 DateTime oneYearAgo =
     DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
-DateTime oneYearAfter =
-    DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
 class DateStartPicker extends StatefulWidget {
   const DateStartPicker({Key? key}) : super(key: key);
@@ -55,7 +53,7 @@ class _DateStartPickerState extends State<DateStartPicker> {
             context: context,
             initialDate: prevMonthFromNow,
             firstDate: oneYearAgo,
-            lastDate: oneYearAfter,
+            lastDate: DateTime.now(),
           );
 
           if (pickedDate != null) {

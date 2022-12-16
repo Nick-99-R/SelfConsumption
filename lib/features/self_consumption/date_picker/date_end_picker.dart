@@ -48,7 +48,7 @@ class _DateEndPickerState extends State<DateEndPicker> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: oneYearAgo,
-            lastDate: oneYearAfter,
+            lastDate: DateTime.now(),
           );
 
           if (pickedDate != null) {

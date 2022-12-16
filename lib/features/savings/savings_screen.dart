@@ -92,9 +92,6 @@ class _SavingsScreenState extends State<SavingsScreen> {
               Expanded(
                   child: ChartInitialSelfConsumption(
                       ChartInitialSelfConsumption.createChartInitial())
-                  // : tapState
-                  //     ? const ChartObserverSaving()
-                  //     : const ChartObserverSaving(),
                   ),
               SizedBox(height: size.height * 0.03),
               Row(
